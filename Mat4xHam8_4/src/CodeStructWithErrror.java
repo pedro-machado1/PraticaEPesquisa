@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class CodeStructWithErrror extends CodeStruct
 {
 	public int recCr[][] = new int[4][3];
@@ -42,8 +44,65 @@ public class CodeStructWithErrror extends CodeStruct
 			sCrq[k] = (sCr[k][0]==1 || sCr[k][1]==1 || sCr[k][2]==1) ? 1 : 0;
 	}
 	public void computeErrorAddress() {
-		for(int k=0; k<4; k++)
+		int count = 0;
+		ArrayList<Integer> arrayC = new ArrayList<>();
+		ArrayList<Integer> arrayP = new ArrayList<>();
+		for(int k=0; k<4; k++){
 			EAr[k] = sCr[k][0] * 4 + sCr[k][1] * 2 + sCr[k][2];
+			if (EAr[k] != 0){
+				count++;
+				arrayC.add(k);
+			}
+		}
+		for (int i=0; i<4; i++){
+			if (sPr[i] == 1)arrayP.add(i) ;
+		}
+//		if (count == 0)
+//			errro no checkbit;
+		if (count == 1){
+
+			int linha =arrayC.getFirst();
+			// da pra fzr tudo isso daqui transformar-se em um for;
+			if (arrayP.size() == 1){
+//				return Ear[linha];
+			}
+			if (arrayP.size() == 2){
+				int n0 = arrayP.get(0);
+				int n1 = arrayP.get(1);
+				// tem que processar pra transformar em linha e coluna;
+//				return n0, n1
+			}
+			if (arrayP.size() == 3){
+				int n0 = arrayP.get(0);
+				int n1 = arrayP.get(1);
+				int n2 = arrayP.get(2);
+//				return n0, n1, n2;
+			}
+			else if (arrayP.size() == 4){
+				int n0 = arrayP.get(0);
+				int n1 = arrayP.get(1);
+				int n2 = arrayP.get(2);
+				int n3 = arrayP.get(3);
+//				return n0, n1, n2, n3;
+			}
+		}
+		if (count == 2){
+			if (arrayP.isEmpty()){
+				// ver os dois hamming e entregar resultados
+			}
+			if (arrayP.size() == 1){
+				// tem erro num checkbit
+			}
+			if (arrayP.size() == 2){
+				// ver os dois parity e hamming comparar
+			}
+		}
+		if (count == 3){
+			if (arrayP.isEmpty()){
+
+			}
+		}
+
 	}
 
 	public void computeSE_DE() {
