@@ -9,7 +9,8 @@ public class CodeStructWithErrror extends CodeStruct
 	public int sPr[] = new int[4];
 	public int sCrq[] = new int[4];
 
-	public int EAr[] = new int[4];
+	public int Aux[] = new int[4];
+ 	public int EAr[] = new int[4];
 	public boolean SEr[] = new boolean[4];
 	public boolean DEr[] = new boolean[4];
 
@@ -47,60 +48,45 @@ public class CodeStructWithErrror extends CodeStruct
 		int count = 0;
 		ArrayList<Integer> arrayC = new ArrayList<>();
 		ArrayList<Integer> arrayP = new ArrayList<>();
-		for(int k=0; k<4; k++){
-			EAr[k] = sCr[k][0] * 4 + sCr[k][1] * 2 + sCr[k][2];
-			if (EAr[k] != 0){
+		for (int k = 0; k < 4; k++) {
+			Aux[k] = sCr[k][0] * 4 + sCr[k][1] * 2 + sCr[k][2];
+			if (Aux[k] != 0) {
 				count++;
-				arrayC.add(k);
+				arrayC.add(k+1);
 			}
 		}
-		for (int i=0; i<4; i++){
-			if (sPr[i] == 1)arrayP.add(i) ;
+		for (int i = 0; i < 4; i++) {
+			if (sPr[i] == 1) arrayP.add(i+1);
 		}
-//		if (count == 0)
-//			errro no checkbit;
-		if (count == 1){
 
-			int linha =arrayC.getFirst();
-			// da pra fzr tudo isso daqui transformar-se em um for;
-			if (arrayP.size() == 1){
-//				return Ear[linha];
-			}
-			if (arrayP.size() == 2){
-				int n0 = arrayP.get(0);
-				int n1 = arrayP.get(1);
-				// tem que processar pra transformar em linha e coluna;
-//				return n0, n1
-			}
-			if (arrayP.size() == 3){
-				int n0 = arrayP.get(0);
-				int n1 = arrayP.get(1);
-				int n2 = arrayP.get(2);
-//				return n0, n1, n2;
-			}
-			else if (arrayP.size() == 4){
-				int n0 = arrayP.get(0);
-				int n1 = arrayP.get(1);
-				int n2 = arrayP.get(2);
-				int n3 = arrayP.get(3);
-//				return n0, n1, n2, n3;
-			}
+		if (count == 0){
+//			errro no checkbit;
+
+		}
+		if (count == 1){
+            for (int i = 0; i < 4; i++) {
+                EAr[i] = Aux[i];
+            }
 		}
 		if (count == 2){
 			if (arrayP.isEmpty()){
-				// ver os dois hamming e entregar resultados
+				for (int i = 0; i < 4; i++) {
+					EAr[i] = Aux[i];
+				}
 			}
 			if (arrayP.size() == 1){
-				// tem erro num checkbit
-			}
-			if (arrayP.size() == 2){
-				// ver os dois parity e hamming comparar
-			}
-		}
-		if (count == 3){
-			if (arrayP.isEmpty()){
 
 			}
+			if (arrayP.size() == 2){
+				for (int i = 0; i < 4; i++) {
+					EAr[i] = Aux[i];
+				}
+			}
+		if (count == 3){
+			if (arrayP.isEmpty()){
+			}
+		}
+
 		}
 
 	}
