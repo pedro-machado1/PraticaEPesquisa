@@ -84,28 +84,187 @@ public class CodeStructWithErrror extends CodeStruct
 			}
 
 		}
-		if (count == 2){
-			if (arrayP.isEmpty()){
+		if (count == 2) {
+			if (arrayP.isEmpty()) {
 				for (int i = 0; i < 2; i++) {
 					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
 				}
 			}
-			if (arrayP.size() == 1){
-
+			if (arrayP.size() == 1) {
+				// chute
+				EAr[arrayC.get(0)][0] = Aux[arrayC.get(0)];
+				EAr[arrayC.get(1)][0] = Aux[arrayC.get(0)];
+				int k = arrayP.get(0);
+					switch (k) {
+						case 0:
+							k = 3;
+							break;
+						case 1:
+							k = 5;
+							break;
+						case 2:
+							k = 6;
+							break;
+						case 3:
+							k = 7;
+							break;
+					}
+					EAr[arrayC.get(1)][1] = k;
 			}
-			if (arrayP.size() == 2){
+			if (arrayP.size() == 2) {
 				for (int i = 0; i < 4; i++) {
 					EAr[i][0] = Aux[i];
 				}
 			}
+			if (arrayP.size() == 3) {
+				// chute
+				for (int k : arrayP) {
+					switch (k){
+						case 0:
+							k = 3;
+							break;
+						case 1:
+							k = 5;
+							break;
+						case 2:
+							k = 6;
+							break;
+						case 3:
+							k = 7;
+							break;
+					}
+					if (c == 0) {
+						EAr[arrayC.get(0)][0] = k;
+					}
+					if (c == 1) {
+						EAr[arrayC.get(0)][1] = k;
+					}
+					if (c == 2) EAr[arrayC.get(1)][0] = k;
+					c++;
+				}
+			}
+			if  (arrayP.size() == 4) {
+				// chute
+				for (int k : arrayP) {
+					switch (k){
+						case 0:
+							k = 3;
+							break;
+						case 1:
+							k = 5;
+							break;
+						case 2:
+							k = 6;
+							break;
+						case 3:
+							k = 7;
+							break;
+					}
+					if (c == 0) {
+						EAr[arrayC.get(0)][0] = k;
+					}
+					if (c == 1) {
+						EAr[arrayC.get(0)][1] = k;
+					}
+					if (c==2) {
+						EAr[arrayC.get(1)][0] = k;
+					}
+					if (c==3) {
+						EAr[arrayC.get(1)][1] = k;
+					}
+					c++;
+				}
+
+			}
+
+		}
 		if (count == 3){
 			if (arrayP.isEmpty()){
+				// chute
+//				for (int i = 0; i < 3; i++) {
+//					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+//				}
+//				EAr[arrayP.get(2)][1] = 3;
+
+			}
+			if (arrayP.size() == 1){
+				for (int i = 0; i < 3; i++) {
+					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+				}
+			}
+			if (arrayP.size() == 2){
+				//chute
+//				for (int i = 0; i < 3; i++) {
+//					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+//				}
+//				EAr[arrayP.get(2)][1] = 3;
+
+			}
+			if (arrayP.size() == 3){
+				for (int i = 0; i < 3; i++) {
+					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+				}
+			}
+			if (arrayP.size() == 4){
+				// chute
+				for (int k : arrayP) {
+					switch (k) {
+						case 0:
+							k = 3;
+							break;
+						case 1:
+							k = 5;
+							break;
+						case 2:
+							k = 6;
+							break;
+						case 3:
+							k = 7;
+							break;
+					}
+					if (c == 0) {
+						EAr[arrayC.get(0)][0] = k;
+					}
+					if (c == 1) {
+						EAr[arrayC.get(0)][1] = k;
+					}
+					if (c==2) {
+						EAr[arrayC.get(1)][0] = k;
+					}
+					if (c==3) {
+						EAr[arrayC.get(2)][0] = k;
+					}
+					c++;
+				}
+			}
+		}
+		if (count == 4){
+			if (arrayP.isEmpty()){
+				for (int i = 0; i < 4; i++) {
+					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+				}
+			}
+			if (arrayP.size() == 1){
+//
+			}
+			if (arrayP.size() == 2){
+				for (int i = 0; i < 4; i++) {
+					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+				}
+			}
+			if (arrayP.size() == 3){
+//
+			}
+			if (arrayP.size() == 4){
+				for (int i = 0; i < 4; i++) {
+					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+				}
 			}
 		}
 
-		}
 
 	}
+
 
 	public void computeSE_DE() {
 //		for(int k=0; k<4; k++) {

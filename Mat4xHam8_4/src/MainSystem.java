@@ -53,7 +53,7 @@ public class MainSystem {
 	public static void main(String[] args) throws Exception {
 		setInitialCodeStruct();
 		setErrorInterval(0, 16);  // O default � (0, 32) ==> Todos os bits do HamMat
- 		for(int numberOfErrors=0; numberOfErrors<=2; numberOfErrors++) 			// comentado APENAS PARA DEPURA��O !!!
+ 		for(int numberOfErrors=0; numberOfErrors<=8; numberOfErrors++) 			// comentado APENAS PARA DEPURA��O !!!
 		{
 //setNumberOfErrors(2);															// inserido APENAS PARA DEPURA��O !!!
 			setNumberOfErrors(numberOfErrors);									// comentado APENAS PARA DEPURA��O !!!
