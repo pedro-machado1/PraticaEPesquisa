@@ -4,7 +4,7 @@ public class MainSystem {
 	private static CodeStruct initialCodeStruct;
 	private static CodeStructWithErrror hamMatWithErrors;
 
-	private static void errorGenerator(int errorIndex, int errorPattern[], int elementIndex) throws Exception 
+	private static void errorGenerator(int errorIndex, int[] errorPattern, int elementIndex) throws Exception
 	{ 
 		if(errorIndex == numErrors) 
 		{ 
@@ -55,7 +55,7 @@ public class MainSystem {
 		setErrorInterval(0, 16);  // O default � (0, 32) ==> Todos os bits do HamMat
  		for(int numberOfErrors=0; numberOfErrors<=2; numberOfErrors++) 			// comentado APENAS PARA DEPURA��O !!!
 		{
-//setNumberOfErrors(1);															// inserido APENAS PARA DEPURA��O !!!
+//setNumberOfErrors(2);															// inserido APENAS PARA DEPURA��O !!!
 			setNumberOfErrors(numberOfErrors);									// comentado APENAS PARA DEPURA��O !!!
 			printTestIdentification();
 			resetSimulationData();

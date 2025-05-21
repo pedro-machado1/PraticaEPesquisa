@@ -10,11 +10,11 @@ public class CodeStructWithErrror extends CodeStruct
 	public int sCrq[] = new int[4];
 
 	public int Aux[] = new int[4];
- 	public int EAr[] = new int[4];
+ 	public int EAr[][] = new int[4][4];
 	public boolean SEr[] = new boolean[4];
 	public boolean DEr[] = new boolean[4];
 
-	public CodeStructWithErrror(CodeStruct initialCodeStruct, int errorPattern[]) throws Exception {
+	public CodeStructWithErrror(CodeStruct initialCodeStruct, int[] errorPattern) throws Exception {
 		super(initialCodeStruct.D);
 		setErrorPattern(errorPattern);
 		recomputeControlVariables();
@@ -45,18 +45,18 @@ public class CodeStructWithErrror extends CodeStruct
 			sCrq[k] = (sCr[k][0]==1 || sCr[k][1]==1 || sCr[k][2]==1) ? 1 : 0;
 	}
 	public void computeErrorAddress() {
-		int count = 0;
+		int count = 0; int c = 0;
 		ArrayList<Integer> arrayC = new ArrayList<>();
 		ArrayList<Integer> arrayP = new ArrayList<>();
 		for (int k = 0; k < 4; k++) {
 			Aux[k] = sCr[k][0] * 4 + sCr[k][1] * 2 + sCr[k][2];
 			if (Aux[k] != 0) {
 				count++;
-				arrayC.add(k+1);
+				arrayC.add(k);
 			}
 		}
 		for (int i = 0; i < 4; i++) {
-			if (sPr[i] == 1) arrayP.add(i+1);
+			if (sPr[i] == 1) arrayP.add(i);
 		}
 
 		if (count == 0){
@@ -64,14 +64,30 @@ public class CodeStructWithErrror extends CodeStruct
 
 		}
 		if (count == 1){
-            for (int i = 0; i < 4; i++) {
-                EAr[i] = Aux[i];
-            }
+			for (int k : arrayP) {
+				switch (k) {
+					case 0:
+						k= 3;
+						break;
+					case 1:
+						k= 5;
+						break;
+					case 2:
+						k= 6;
+						break;
+					case 3:
+						k= 7;
+						break;
+				}
+				EAr[arrayC.getFirst()][c] = k;
+				c++;
+			}
+
 		}
 		if (count == 2){
 			if (arrayP.isEmpty()){
-				for (int i = 0; i < 4; i++) {
-					EAr[i] = Aux[i];
+				for (int i = 0; i < 2; i++) {
+					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
 				}
 			}
 			if (arrayP.size() == 1){
@@ -79,7 +95,7 @@ public class CodeStructWithErrror extends CodeStruct
 			}
 			if (arrayP.size() == 2){
 				for (int i = 0; i < 4; i++) {
-					EAr[i] = Aux[i];
+					EAr[i][0] = Aux[i];
 				}
 			}
 		if (count == 3){
@@ -92,12 +108,12 @@ public class CodeStructWithErrror extends CodeStruct
 	}
 
 	public void computeSE_DE() {
-		for(int k=0; k<4; k++) {
-			SEr[k] = sCrq[k]==1 && sPr[k]==1;
-			DEr[k] = sCrq[k]==1 && sPr[k]==0;
-		}
+//		for(int k=0; k<4; k++) {
+//			SEr[k] = sCrq[k]==1 && sPr[k]==1;
+//			DEr[k] = sCrq[k]==1 && sPr[k]==0;
+//		}
 	}
-	private void setErrorPattern(int errorPattern[]) throws Exception {
+	private void setErrorPattern(int[] errorPattern) throws Exception {
 		for(int k = 0; k < errorPattern.length; k++)
 			setError(errorPattern[k]);
 	}
