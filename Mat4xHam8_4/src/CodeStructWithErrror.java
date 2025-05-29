@@ -10,7 +10,6 @@ public class CodeStructWithErrror extends CodeStruct
 	public int sCrq[] = new int[4];
 
 	public int Aux[] = new int[4];
-	public int Aux2[] = new int[4];
  	public int EAr[][] = new int[4][4];
 	public boolean SEr[] = new boolean[4];
 	public boolean DEr[] = new boolean[4];
@@ -61,10 +60,11 @@ public class CodeStructWithErrror extends CodeStruct
 		}
 
 		if (count == 0){
-//			errro no checkbit;
+//			errro no parity;
 
 		}
 		if (count == 1){
+			// se quiser fzr error correction para corrigir parity; só conferir e depois mudar;
 			for (int k : arrayP) {
 				k=mapParityToPosition(k);
 				EAr[arrayC.getFirst()][c] = k;
@@ -217,7 +217,6 @@ public class CodeStructWithErrror extends CodeStruct
 								EAr[n2][1] = 7;
 								EAr[n1][0] = Aux[n1];
 							}
-							Aux2[n2] = recCr[n2][0] * 4 + recCr[n2][1] * 2 + recCr[n2][2];
 							aux = (numero + 3) % 7;
 							if (Aux[n2] == aux) {
 								EAr[n1][0] = numero;
@@ -246,6 +245,7 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 			}
 			if (arrayP.size() == 3){
+				// da pra fzr pra 7 (1%)
 				for (int i = 0; i < 3; i++) {
 					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
 				}
@@ -299,19 +299,72 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 			}
 			if (arrayP.size() == 1){
-//				for (int i = 0; i < 4; i++) {
-//					if (1 == arrayP.get(mapPositionToParity(Aux[arrayC.get(i)]))){
-//
+				int n1= -1;
+				for (int i = 0; i < 4; i++) {
+					for (int k = i+1; k < 3; k++) {
+						if (Aux[i] == Aux[k]){
+							EAr[i][0] = Aux[i];
+							EAr[k][0] = Aux[k];
+							arrayC.remove((Integer) i);
+							arrayC.remove((Integer) k);
+							break;
+						}
+					}
+				}
+				if (arrayC.size() == 2){
+					for (int i = 0; i < 2; i++) {
+						if (Aux[i] == 4 || Aux[i] == 1 || Aux[i] == 2) {
+							n1 = i;
+							arrayC.remove((Integer) i);
+							break;
+						}
+					}
+					if (n1 != -1) {
+						EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
+						EAr[n1][0] = Aux[arrayP.getFirst()];
+						EAr[n1][1] = mapParityToPosition(arrayP.getFirst());
+					}
+
+				}
+//				else {
+//					for (int i = 0; i < 4; i++) {
+//						int aux = mapPositionToParity( Aux[arrayC.get(i)]);
+//						if (arrayP.contains(aux)){
+//							EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+//							arrayC.remove((Integer) i);
+//						}
 //					}
 //				}
+
 			}
 			if (arrayP.size() == 2){
-				// melhorar
+				// melhorar fzr pra 6
 				for (int i = 0; i < 4; i++) {
 					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
 				}
 			}
 			if (arrayP.size() == 3){
+//				int n1 = -1;
+//				for (int i = 0; i < 4; i++) {
+//					if (1 == arrayP.get(mapPositionToParity(Aux[arrayC.get(i)]))){
+//						arrayP.remove(mapPositionToParity(Aux[arrayC.get(i)]));
+//						EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+//						arrayC.remove(i);
+//					}
+//				}
+//				// vai sobrar dois locais;
+//				for (int i : arrayC) {
+//					if (Aux[i] == 4 || Aux[i] == 1 || Aux[i] == 2) {
+//						n1 = i;
+//						arrayC.remove((Integer) n1);
+//						break;
+//					}
+//				}
+//				EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
+//
+//				EAr[n1][0] = mapParityToPosition(arrayP.getFirst());
+//				EAr[n1][1] = Aux[arrayC.getFirst()];
+
 				int n1 = -1; int n2= -1; boolean naocontem = false; int necessario;
 				for (int i =0; i<3; i++){
 					for (int j = i+1; j < 4; j++) {
@@ -372,10 +425,35 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 			}
 			if (arrayP.size() == 4){
-				// melhorar
+				// melhorar check if it exists if it doesnt than if one doesnt match it is 6  when two it is 8;
+				// then check add ;
+				// pode fzr mas tu vai morrer;
+				int n2 = -1, n1 = -1, n3 = 0;
 				for (int i = 0; i < 4; i++) {
-					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+					if (mapPositionToParity(Aux[arrayC.get(i)]) != -1) {
+						EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+						n3 = Aux[arrayC.get(i)];
+						arrayP.remove((Integer) i);
+					}
+					else{
+						if (n1 != -1){
+							n2 = i;
+
+						}
+						else {
+							n1 = i;
+						}
+					}
 				}
+				if (n1 != -1 && n2 != -1) {
+					EAr[n1][0] = mapParityToPosition(arrayP.getFirst());
+					EAr[n1][1] = mapParityToPosition(n3);
+
+					EAr[n2][0] = mapParityToPosition(arrayP.get(1));
+					EAr[n2][1] = mapParityToPosition(n3);
+
+				}
+
 			}
 		}
 
@@ -435,7 +513,7 @@ public class CodeStructWithErrror extends CodeStruct
 			case 1: return 5;
 			case 2: return 6;
 			case 3: return 7;
-			default: return k;
+			default: return -1;
 		}
 	}
 	private int mapPositionToParity(int k) {
@@ -444,7 +522,7 @@ public class CodeStructWithErrror extends CodeStruct
 			case 5: return 1;
 			case 6: return 2;
 			case 7: return 3;
-			default: return k;
+			default: return -1;
 		}
 	}
 
