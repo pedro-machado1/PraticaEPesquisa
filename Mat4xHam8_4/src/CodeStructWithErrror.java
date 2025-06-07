@@ -107,6 +107,7 @@ public class CodeStructWithErrror extends CodeStruct
 			}
 			if  (arrayP.size() == 4) {
 				// chute (6 casos)
+				// fzr tabelinha para cada hamming vale a pena;
 //				int n1 = Aux[arrayC.get(0)] ;
 				for (int k : arrayP) {
 					k = mapParityToPosition(k);
@@ -146,7 +147,7 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 			}
 			if (arrayP.size() == 2){
-				int n1 = -1; int n2= -1; boolean naocontem = false; int necessario;
+				int n1 = -1; int n2= -1;
 				for (int i =0; i<3; i++){
 					for (int j = i+1; j < 4; j++) {
 						 if(Aux[i] == Aux[j]){
@@ -161,15 +162,12 @@ public class CodeStructWithErrror extends CodeStruct
 					Integer obj1 = n1;
 					Integer obj2 = n2;
 					Integer position1 = mapPositionToParity(Aux[n1]);
-					Integer position2 = mapPositionToParity(Aux[n2]);
-					Integer position3 = mapPositionToParity(Aux[arrayC.getFirst()]);
 					arrayC.remove(obj1);
 					arrayC.remove(obj2);
 
 					EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
 					// problema
 					int n3 = arrayC.getFirst();
-					Integer obj3 =n3;
 					EAr[n1][0] = Aux[n1];
 					EAr[n2][0] = Aux[arrayC.getFirst()];
 					arrayP.remove(position1);
@@ -193,6 +191,7 @@ public class CodeStructWithErrror extends CodeStruct
 						n1 = arrayC.getFirst();
 						n2 = arrayC.get(1);
 						int numero= mapParityToPosition(arrayP.getFirst());
+						// dá pra fzr isso daqui virar um for;
 							int aux = (numero + 3) % 7;
 							if (Aux[n1] == aux) {
 								EAr[n2][0] = numero;
@@ -245,7 +244,7 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 			}
 			if (arrayP.size() == 3){
-				// da pra fzr pra 7 (1%)
+				// da pra fzr pra 5 e 7 (1%)
 				for (int i = 0; i < 3; i++) {
 					EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
 				}
@@ -274,7 +273,7 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 				else {
 					for (int i = 0; i < 4; i++) {
-						if (Aux[i] == 4 || Aux[i] == 1 || Aux[i] == 2) {
+						if (Aux[i] == 4 || Aux[i] == 1 || Aux[i] == 2) {                                               /// //////////////////
 							n1 = i;
 							arrayC.remove((Integer) n1);
 							break;
@@ -313,7 +312,7 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 				if (arrayC.size() == 2){
 					for (int i = 0; i < 2; i++) {
-						if (Aux[i] == 4 || Aux[i] == 1 || Aux[i] == 2) {
+						if (Aux[i] == 4 || Aux[i] == 1 || Aux[i] == 2) {                                  /// ////////////////////////
 							n1 = i;
 							arrayC.remove((Integer) i);
 							break;
@@ -324,18 +323,39 @@ public class CodeStructWithErrror extends CodeStruct
 						EAr[n1][0] = Aux[arrayP.getFirst()];
 						EAr[n1][1] = mapParityToPosition(arrayP.getFirst());
 					}
-
+					else {
+						EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
+						EAr[arrayC.get(1)][0] = Aux[arrayC.getFirst()];
+						EAr[arrayC.get(1)][1] = mapParityToPosition(arrayP.getFirst());
+					}
 				}
-//				else {
-//					for (int i = 0; i < 4; i++) {
-//						int aux = mapPositionToParity( Aux[arrayC.get(i)]);
-//						if (arrayP.contains(aux)){
-//							EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
-//							arrayC.remove((Integer) i);
-//						}
-//					}
-//				}
-
+				// 1%
+				else if (arrayC.size() == 4){
+					for (int i = 0; i < 4; i++) {
+						int aux = mapPositionToParity( Aux[arrayC.get(i)]);
+						if (arrayP.contains(aux)){
+							EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
+							arrayC.remove((Integer) i);
+							break;
+						}
+					}
+					if (arrayC.size() == 3){
+						for (int i = 0; i < 3; i++) {
+							if (Aux[i] == 4 || Aux[i] == 1 || Aux[i] == 2) {                      ////////////////////////////////////////
+								n1 = i;
+								arrayC.remove((Integer) i);
+								break;
+							}
+						}
+						if (n1 != -1) {
+							EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
+							EAr[arrayC.get(1)][0] = Aux[arrayC.get(1)];
+							EAr[n1][0] = Aux[arrayP.getFirst()];
+							EAr[n1][1] = Aux[arrayC.get(1)];
+						}
+					}
+					// else impossivel;
+				}
 			}
 			if (arrayP.size() == 2){
 				// melhorar fzr pra 6
@@ -344,33 +364,14 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 			}
 			if (arrayP.size() == 3){
-//				int n1 = -1;
-//				for (int i = 0; i < 4; i++) {
-//					if (1 == arrayP.get(mapPositionToParity(Aux[arrayC.get(i)]))){
-//						arrayP.remove(mapPositionToParity(Aux[arrayC.get(i)]));
-//						EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
-//						arrayC.remove(i);
-//					}
-//				}
-//				// vai sobrar dois locais;
-//				for (int i : arrayC) {
-//					if (Aux[i] == 4 || Aux[i] == 1 || Aux[i] == 2) {
-//						n1 = i;
-//						arrayC.remove((Integer) n1);
-//						break;
-//					}
-//				}
-//				EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
-//
-//				EAr[n1][0] = mapParityToPosition(arrayP.getFirst());
-//				EAr[n1][1] = Aux[arrayC.getFirst()];
-
-				int n1 = -1; int n2= -1; boolean naocontem = false; int necessario;
+				int n1 = -1, n2= -1;
+				boolean flag = false;
 				for (int i =0; i<3; i++){
 					for (int j = i+1; j < 4; j++) {
 						if(Aux[i] == Aux[j]){
 							n1 = i;
 							n2 = j;
+							if (arrayP.contains(mapPositionToParity(Aux[n1]))) flag = true;
 							break;
 						}
 					}
@@ -379,21 +380,32 @@ public class CodeStructWithErrror extends CodeStruct
 				if (n1 != -1) {
 					arrayC.remove((Integer) n1);
 					arrayC.remove((Integer) n2);
-					EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
-					EAr[arrayC.get(1)][0] = Aux[arrayC.get(1)];
-					EAr[n1][0] = Aux[n1];
-					arrayP.remove((Integer) mapPositionToParity(Aux[n1]));
-					int n3 = -1;
-					if (!arrayP.remove((Integer) mapPositionToParity(Aux[arrayC.get(0)]))) {
-						n3 = Aux[arrayC.getFirst()];
+					if (flag) {
+						EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
+						EAr[arrayC.get(1)][0] = Aux[arrayC.get(1)];
+						EAr[n1][0] = Aux[n1];
+						arrayP.remove((Integer) mapPositionToParity(Aux[n1]));
+						int n3 = -1;
+						if (!arrayP.remove((Integer) mapPositionToParity(Aux[arrayC.get(0)]))) {
+							n3 = Aux[arrayC.getFirst()];
+						}
+						if (!arrayP.remove((Integer) mapPositionToParity(Aux[arrayC.get(1)]))) {
+							n3 = Aux[arrayC.get(1)];
+						}
+						if (n3 == -1) ;
+						else {
+							EAr[n2][0] = mapParityToPosition(arrayP.getFirst());
+							EAr[n2][1] = n3;
+						}
 					}
-					if (!arrayP.remove((Integer) mapPositionToParity(Aux[arrayC.get(1)]))) {
-						n3= Aux[arrayC.get(1)];
-					}
-					if (n3 == -1) ;
+					// qnd o o aux repetido é um aux correto
 					else {
-						EAr[n2][0] = mapParityToPosition(arrayP.getFirst());
-						EAr[n2][1] = n3;
+						EAr[n1][0] = Aux[n1];
+						EAr[n2][0] = Aux[n1];
+						EAr[arrayC.getFirst()][0] = Aux[arrayC.getFirst()];
+						arrayP.remove((Integer) mapPositionToParity(Aux[arrayC.getFirst()]));
+						EAr[arrayC.get(1)][0] = mapParityToPosition(arrayP.getFirst());
+						EAr[arrayC.get(1)][1] = mapParityToPosition(arrayP.get(1));
 					}
 				}
 				else {
@@ -416,24 +428,23 @@ public class CodeStructWithErrror extends CodeStruct
                     if (!arrayP.remove((Integer) mapPositionToParity(Aux[arrayC.get(2)]))) {
                         n2= Aux[arrayC.get(2)];
                     }
-					if (n1 == -1 || n2 == -1) ;
+					if (n1 == -1 || n2 == -1) ; // impossivel aux será igual a outro numero por tanto caira no aux == a outro aux ;
 					else {
-						EAr[n1][0] = mapParityToPosition(arrayP.get(0));
+						EAr[n1][0] = mapParityToPosition(arrayP.getFirst());
 						EAr[n1][1] = n2;
 					}
 
 				}
 			}
 			if (arrayP.size() == 4){
-				// melhorar check if it exists if it doesnt than if one doesnt match it is 6  when two it is 8;
-				// then check add ;
-				// pode fzr mas tu vai morrer;
+				// melhorar check if it exists if it doesnt than if one doesnt match it is 6;
+				// then check add;
 				int n2 = -1, n1 = -1, n3 = 0;
 				for (int i = 0; i < 4; i++) {
 					if (mapPositionToParity(Aux[arrayC.get(i)]) != -1) {
 						EAr[arrayC.get(i)][0] = Aux[arrayC.get(i)];
 						n3 = Aux[arrayC.get(i)];
-						arrayP.remove((Integer) i);
+						arrayP.remove((Integer) mapPositionToParity(Aux[arrayC.get(i)]));
 					}
 					else{
 						if (n1 != -1){
@@ -447,10 +458,10 @@ public class CodeStructWithErrror extends CodeStruct
 				}
 				if (n1 != -1 && n2 != -1) {
 					EAr[n1][0] = mapParityToPosition(arrayP.getFirst());
-					EAr[n1][1] = mapParityToPosition(n3);
+					EAr[n1][1] = n3;
 
 					EAr[n2][0] = mapParityToPosition(arrayP.get(1));
-					EAr[n2][1] = mapParityToPosition(n3);
+					EAr[n2][1] = n3;
 
 				}
 
